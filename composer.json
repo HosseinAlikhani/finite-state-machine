@@ -21,7 +21,9 @@
         "symfony/dependency-injection": "^6.0"
     },
     "autoload": {
-        "psr-0": { "Finite": "src/" }
+        "psr-4": {
+            "Finite\\": "src/"
+        }
     },
     "extra": {
         "branch-alias": {
