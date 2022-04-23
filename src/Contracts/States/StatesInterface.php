@@ -6,9 +6,10 @@ interface StatesInterface
     /**
      * add state to states object
      * @param string|StateInterface $state
+     * @param array $allowedStates
      * @return StatesInterface
      */
-    public function addState(string|StateInterface $state): StatesInterface;
+    public function addState(string|StateInterface $state, array $allowedStates): StatesInterface;
 
     /**
      * check state is exists in states property
