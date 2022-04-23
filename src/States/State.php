@@ -17,10 +17,17 @@ final class State implements StateInterface
      */
     private string $name;
 
-    public function __construct(string $stateType, string|null $stateName = null)
+    /**
+     * store allowed states that can be changed
+     * @var array
+     */
+    private array $allowedStates = [];
+
+    public function __construct(string $stateType, string|null $stateName = null, array $allowedStates)
     {
         $this->type = strtoupper($stateType);
         $this->name = $stateName ?? strtolower($this->getType());
+        $this->allowedStates = $allowedStates;
     }
 
     /**
@@ -39,5 +46,30 @@ final class State implements StateInterface
     public function getName(): string
     {
         return $this->name;
+    }
+ 
+    /**
+     * set allowed states
+     * @param array $allowedStates
+     * @param bool $sync
+     * @return StateInterface
+     */
+    public function setAllowedState(array $allowedStates, bool $sync = false): StateInterface
+    {
+        if ( $sync ) {
+            $this->allowedStates = $allowedStates;
+        } else {
+            array_push($this->allowedStates, $allowedStates);
+        }
+        return $this;
+    }
+
+    /**
+     * get allowed states
+     * @return array
+     */
+    public function getAllowedState(): array
+    {
+        return $this->allowedStates;
     }
 }
