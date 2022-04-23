@@ -20,8 +20,8 @@ interface StateMachineInterface
     /**
      * add state to state machine
      * @param string $stateFrom
-     * @param string $stateTo
+     * @param array $stateTo
      * @return StateMachineInterface
      */
-    public function addState(string $stateFrom, string $stateTo): StateMachineInterface;
+    public function addState(string $stateFrom, array $stateTo): StateMachineInterface;
 }
