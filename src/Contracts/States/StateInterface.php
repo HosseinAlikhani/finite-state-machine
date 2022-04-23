@@ -28,4 +28,11 @@ interface StateInterface
      * @return StateInterface
      */
     public function setAllowedState(array $allowedStates, bool $sync = false): StateInterface;
+
+    /**
+     * check state can be changed To
+     * @param string $state
+     * @return bool
+     */
+    public function canChangeTo(string $state): bool;
 }

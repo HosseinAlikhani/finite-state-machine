@@ -72,4 +72,14 @@ final class State implements StateInterface
     {
         return $this->allowedStates;
     }
+
+    /**
+     * check state can be changed To
+     * @param string $state
+     * @return bool
+     */
+    public function canChangeTo(string $state): bool
+    {
+        return in_array($state, $this->allowedStates);
+    }
 }
