@@ -1,6 +1,8 @@
 <?php
 namespace Finite\States\contracts;
 
+use Finite\Transitions\contracts\TransitionInterface;
+
 interface StateInterface
 {
     /**
@@ -17,9 +19,15 @@ interface StateInterface
  
     /**
      * get allowed states
-     * @return array
+     * @return StatesInterface
      */
-    public function getAllowedState(): array;
+    public function getAllowedState(): StatesInterface;
+
+    /**
+     * get transition
+     * @return TransitionInterface
+     */
+    public function getTransition(): TransitionInterface;
 
     /**
      * check state can be changed To
