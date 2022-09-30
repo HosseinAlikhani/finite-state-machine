@@ -3,20 +3,22 @@ namespace Finite\States;
 
 use Finite\States\contracts\StateInterface;
 use Finite\States\contracts\StatesInterface;
+use Finite\Transitions\contracts\TransitionInterface;
+use Finite\Transitions\Transition;
 
-final class State implements StateInterface
+class State implements StateInterface
 {
     /**
      * store state type
      * @var string
      */
-    private string $type;
+    protected string $type;
 
     /**
      * store state name
      * @var string
      */
-    private string $name;
+    protected string $name;
 
     /**
      * store allowed states that can be changed
@@ -24,29 +26,49 @@ final class State implements StateInterface
      */
     private StatesInterface $allowedStates;
 
-    public function __construct(string $stateType, string|null $stateName = null, array $allowedStates)
+    /**
+     * store allowed state transition
+     * @var TransitionInterface
+     */
+    private TransitionInterface $transition;
+
+    public function __construct(
+        string $stateType, 
+        string|null $stateName = null, 
+        array $allowedStates,
+        array $transition,
+    )
     {
         $this->type = strtoupper($stateType);
         $this->name = $stateName ?? strtolower($this->getType());
-        $this->allowedStates = $this->setAllowedStates($allowedStates);
+        $this->setAllowedStates($allowedStates);
+        $this->setTransition($transition);
     }
 
     /**
      * set allowed states
      * @param array $allowedStates
-     * @return StatesInterface
      */
-    private function setAllowedStates(array $allowedStates): StatesInterface
+    private function setAllowedStates(array $allowedStates)
     {
-        $states = new States();
+        $this->allowedStates = new States();
 
         if ( count($allowedStates) ) {
-            foreach( $allowedStates as $state ) {
-                $states->addState($state);
+            foreach( $allowedStates as $state => $transition ) {
+                $this->allowedStates->addState($state, [], $transition);
             }
         }
         
-        return $states;
+        return $this;
+    }
+
+    /**
+     * @param array $transition
+     */
+    private function setTransition(array $transition)
+    {
+        $this->transition = new Transition($transition);
+        return $this;
     }
 
     /**
@@ -69,11 +91,20 @@ final class State implements StateInterface
 
     /**
      * get allowed states
-     * @return array
+     * @return StatesInterface
      */
-    public function getAllowedState(): array
+    public function getAllowedState(): StatesInterface
     {
         return $this->allowedStates;
+    }
+
+    /**
+     * get transition
+     * @return TransitionInterface
+     */
+    public function getTransition(): TransitionInterface
+    {
+        return $this->transition;
     }
 
     /**
