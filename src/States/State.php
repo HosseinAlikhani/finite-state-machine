@@ -1,7 +1,8 @@
 <?php
 namespace Finite\States;
 
-use Finite\Contracts\States\StateInterface;
+use Finite\States\contracts\StateInterface;
+use Finite\States\contracts\StatesInterface;
 
 final class State implements StateInterface
 {
@@ -19,15 +20,33 @@ final class State implements StateInterface
 
     /**
      * store allowed states that can be changed
-     * @var array
+     * @var StatesInterface
      */
-    private array $allowedStates = [];
+    private StatesInterface $allowedStates;
 
     public function __construct(string $stateType, string|null $stateName = null, array $allowedStates)
     {
         $this->type = strtoupper($stateType);
         $this->name = $stateName ?? strtolower($this->getType());
-        $this->allowedStates = $allowedStates;
+        $this->allowedStates = $this->setAllowedStates($allowedStates);
+    }
+
+    /**
+     * set allowed states
+     * @param array $allowedStates
+     * @return StatesInterface
+     */
+    private function setAllowedStates(array $allowedStates): StatesInterface
+    {
+        $states = new States();
+
+        if ( count($allowedStates) ) {
+            foreach( $allowedStates as $state ) {
+                $states->addState($state);
+            }
+        }
+        
+        return $states;
     }
 
     /**
@@ -47,22 +66,6 @@ final class State implements StateInterface
     {
         return $this->name;
     }
- 
-    /**
-     * set allowed states
-     * @param array $allowedStates
-     * @param bool $sync
-     * @return StateInterface
-     */
-    public function setAllowedState(array $allowedStates, bool $sync = false): StateInterface
-    {
-        if ( $sync ) {
-            $this->allowedStates = $allowedStates;
-        } else {
-            array_push($this->allowedStates, $allowedStates);
-        }
-        return $this;
-    }
 
     /**
      * get allowed states
@@ -80,6 +83,6 @@ final class State implements StateInterface
      */
     public function canChangeTo(string $state): bool
     {
-        return in_array($state, $this->allowedStates);
+        return $this->allowedStates->isStateExists($state);
     }
 }
