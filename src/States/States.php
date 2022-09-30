@@ -18,12 +18,13 @@ final class States implements StatesInterface
      * add state to states property
      * @param StateInterface|string
      * @param array $allowedStates
+     * @param array $transitions
      * @return StatesInterface
      */
     public function addState(
         string|StateInterface $state, 
         array $allowedStates = [],
-        Closure|array $transitions = [],
+        array $transitions = [],
     ): StatesInterface
     {
         $state = $state instanceof StateInterface ? $state : new State($state, null, $allowedStates, $transitions);
