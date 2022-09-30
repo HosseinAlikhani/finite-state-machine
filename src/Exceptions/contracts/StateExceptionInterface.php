@@ -1,5 +1,5 @@
 <?php
-namespace Finite\Contracts\Exceptions;
+namespace Finite\Exceptions\contracts;
 
 interface StateExceptionInterface
 {

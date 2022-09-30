@@ -1,5 +1,5 @@
 <?php
-namespace Finite\Contracts\Transitions;
+namespace Finite\Transitions\contracts;
 
 interface TransitionsInterface
 {

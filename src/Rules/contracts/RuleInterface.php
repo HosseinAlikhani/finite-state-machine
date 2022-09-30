@@ -1,5 +1,5 @@
 <?php
-namespace Finite\Contracts\Rules;
+namespace Finite\Rules\contracts;
 
 interface RuleInterface
 {

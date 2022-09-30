@@ -1,9 +1,9 @@
 <?php
 namespace Finite\States;
 
-use Finite\Contracts\States\StateInterface;
-use Finite\Contracts\States\StatesInterface;
 use Finite\Exceptions\StateException;
+use Finite\States\contracts\StateInterface;
+use Finite\States\contracts\StatesInterface;
 
 final class States implements StatesInterface
 {

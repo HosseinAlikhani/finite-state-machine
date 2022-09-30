@@ -1,7 +1,7 @@
 <?php
 namespace Finite\Rules;
 
-use Finite\Contracts\Rules\RuleInterface;
+use Finite\Rules\contracts\RuleInterface;
 
 final class Rule implements RuleInterface
 {

@@ -1,7 +1,7 @@
 <?php
 namespace Finite\Transitions;
 
-use Finite\Contracts\Transitions\TransitionInterface;
+use Finite\Transitions\contracts\TransitionInterface;
 
 final class Transition implements TransitionInterface
 {

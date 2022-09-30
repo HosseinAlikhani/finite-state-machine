@@ -2,8 +2,8 @@
 namespace Finite;
 
 use Finite\Contracts\StateMachineInterface;
-use Finite\Contracts\States\StateInterface;
-use Finite\Contracts\States\StatesInterface;
+use Finite\States\contracts\StateInterface;
+use Finite\States\contracts\StatesInterface;
 use Finite\States\States;
 
 class StateMachine implements StateMachineInterface

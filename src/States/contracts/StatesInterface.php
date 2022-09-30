@@ -1,5 +1,5 @@
 <?php
-namespace Finite\Contracts\States;
+namespace Finite\States\contracts;
 
 interface StatesInterface
 {
