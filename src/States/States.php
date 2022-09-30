@@ -1,6 +1,7 @@
 <?php
 namespace Finite\States;
 
+use Closure;
 use Finite\Exceptions\StateException;
 use Finite\States\contracts\StateInterface;
 use Finite\States\contracts\StatesInterface;
@@ -19,9 +20,13 @@ final class States implements StatesInterface
      * @param array $allowedStates
      * @return StatesInterface
      */
-    public function addState(string|StateInterface $state, array $allowedStates = []): StatesInterface
+    public function addState(
+        string|StateInterface $state, 
+        array $allowedStates = [],
+        Closure|array $transitions = [],
+    ): StatesInterface
     {
-        $state = $state instanceof StateInterface ? $state : new State($state, null, $allowedStates);
+        $state = $state instanceof StateInterface ? $state : new State($state, null, $allowedStates, $transitions);
         $this->states[$state->getName()] = $state;
         return $this;
     }

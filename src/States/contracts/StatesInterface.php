@@ -4,12 +4,17 @@ namespace Finite\States\contracts;
 interface StatesInterface
 {
     /**
-     * add state to states object
-     * @param string|StateInterface $state
+     * add state to states property
+     * @param StateInterface|string
      * @param array $allowedStates
+     * @param array $transitions
      * @return StatesInterface
      */
-    public function addState(string|StateInterface $state, array $allowedStates): StatesInterface;
+    public function addState(
+        string|StateInterface $state, 
+        array $allowedStates = [],
+        array $transitions = [],
+    ): StatesInterface;
 
     /**
      * check state is exists in states property
