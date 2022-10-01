@@ -6,26 +6,27 @@ use Finite\Transitions\contracts\TransitionInterface;
 
 final class Transition implements TransitionInterface
 {
-    /**
-     * store transition callback
-     * @var array
-     */
-    private array $callback;
+    private ?Closure $entry;
+    private ?Closure $do;
+    private ?Closure $exit;
 
     public function __construct(array $transition)
     {
-        $entry = $do = $exit = null;
-
         if ( $transition instanceof Closure ) {
-            $entry = $transition;
+            $this->entry = $transition;
         } else {
-            list($entry, $do, $exit ) = $transition;
+            list($this->entry, $this->do, $this->exit ) = $transition;
         }
+    }
 
-        $this->callback = [
-            'entry' =>  $entry,
-            'do'    =>  $do,
-            'exit'  =>  $exit
-        ];
+    /**
+     * run tranisiton callback
+     * @return mixed
+     */
+    public function runCallback(): mixed
+    {
+        return ( $this->entry ? call_user_func($this->entry) : true ) && 
+            ( $this->do ? call_user_func($this->do) : true ) && 
+            ( $this->exit ? call_user_func($this->exit) : true ) ;
     }
 }
