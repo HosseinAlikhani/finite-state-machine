@@ -114,6 +114,12 @@ class State implements StateInterface
      */
     public function canChangeTo(string $state): bool
     {
-        return $this->allowedStates->isStateExists($state);
+        $canChangeTo = $this->allowedStates->isStateExists($state);
+        if ( ! $canChangeTo ) {
+            return $canChangeTo;
+        }
+
+        $transition = $this->allowedStates->getState($state)->getTransition();
+        return $transition->runCallback();
     }
 }
